@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -30,8 +31,9 @@ class TestController extends Controller
         // データの取得
         $validatedData = $request->validated();
 
-        //var_dump($validatedData); exit;
-
-        return view('test.input', ['datum' => $validatedData]);
-    }   
+        // テンプレートにデータを渡す
+        return view('test.input', [
+            'datum' => $validatedData,
+        ]);
+    }
 }
