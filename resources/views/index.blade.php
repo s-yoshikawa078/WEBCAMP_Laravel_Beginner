@@ -6,6 +6,6 @@
         <form action="/login" method="post">
             email：<input type="text" name="email"><br>
             パスワード：<input type="password" name="password"><br>
-            <button>ログインする</button>
+            <button>ログイン</button>
         </form>
 @endsection      
