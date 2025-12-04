@@ -8,6 +8,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\CompletedTaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,11 +23,12 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 // タスク管理システム
 Route::get('/', [AuthController::class, 'index'])->name('front.index');
+Route::get('/login', [AuthController::class, 'index'])->name('login.form'); 
 Route::post('/login', [AuthController::class, 'login']);
 // 認可処理
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/task')->group(function () {
-        Route::get('/list', [TaskController::class, 'list']);
+        Route::get('/list', [TaskController::class, 'list'])->name('task.list');
         Route::post('/register', [TaskController::class, 'register']);
         Route::get('/detail/{task_id}', [TaskController::class, 'detail'])->whereNumber('task_id')->name('detail');
         Route::get('/edit/{task_id}', [TaskController::class, 'edit'])->whereNumber('task_id')->name('edit');
@@ -34,7 +36,11 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/delete/{task_id}', [TaskController::class, 'delete'])->whereNumber('task_id')->name('delete');
         Route::post('/complete/{task_id}', [TaskController::class, 'complete'])->whereNumber('task_id')->name('complete');
         Route::get('/csv/download', [TaskController::class, 'csvDownload']);
+        
     });
+
+    Route::get('/completed_tasks/list', [CompletedTaskController::class, 'list']);
+
     Route::get('/logout', [AuthController::class, 'logout']);
 });
 // 管理画面
@@ -51,6 +57,7 @@ Route::prefix('/admin')->group(function () {
 // テスト用
 Route::get('/welcome', [WelcomeController::class, 'index']);
 Route::get('/welcome/second', [WelcomeController::class, 'second']);
+
 // form入力テスト用
 Route::get('/test', [TestController::class, 'index']);
 Route::post('/test/input', [TestController::class, 'input']);

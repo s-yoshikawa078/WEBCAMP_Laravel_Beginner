@@ -10,10 +10,10 @@
             @endforeach
             </div>
         @endif        
-        <form action="/login" method="post">
-            @csrf
-            email：<input type="text" name="email" value="{{ old('email') }}"><br>
-            パスワード：<input type="password" name="password"><br>
-            <button>ログインする</button>
+        <form action="{{ route('login') }}" method="POST">
+         @csrf
+         <input type="email" name="email" required>
+         <input type="password" name="password" required>
+         <button type="submit">ログイン</button>
         </form>
 @endsection    
